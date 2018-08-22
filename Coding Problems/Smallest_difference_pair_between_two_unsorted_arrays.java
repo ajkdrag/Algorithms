@@ -52,6 +52,8 @@
      
      min = 1, and we return 1 in this case.
      To summarize, we are finding [ max_of(A1[i],A2[j]) - it's "floor_value" from the other array ]    
+     Note that we can use Binary Search approach to find the floor_value,
+     but since the upper bound for this problem is the sorting algorithm, further optimizations aren't too beneficial.
 */  
 
 
