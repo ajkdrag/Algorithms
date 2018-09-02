@@ -167,10 +167,9 @@ int getNumCandies(int m) {
     // obtain from left if it's equal
 		if (ages[m] == ages[m - 1])
 			left = get(m - 1);
-		if (ages[m] > ages[m + 1]) {
+		if (ages[m] > ages[m + 1]) 
 			right = get(m + 1) + 1;
-		}
-    
+		    
     // before calling to the right (if it's equal) make sure to "save" the value obtained from left 
     // to avoid the recusive loop we talked about in the algo
 		if (ages[m] == ages[m + 1]) {
@@ -179,5 +178,6 @@ int getNumCandies(int m) {
 		}
 
 		candies[m] = Math.max(left, right);
+	
 		return candies[m];
-	}
+}
