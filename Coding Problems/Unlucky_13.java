@@ -173,3 +173,74 @@ public static void main(String[] args) throws IOException{
         return res;
     }
 }
+
+
+/*
+ Derivation of f(n+1) = 10*f(n) - f(n-1) , by Inclusion-Exclusion principle :
+ 
+ Let's consider the case for N = 3 i.e 3 digits : __ __ __
+ Here total number of possiblities are considered first, hence each digit can be any from [0, 9] i.e 10 choices
+ therefore total = 10^3 
+ Out of this, we need to deduct the numbers which contain 13 in them. Now, since 13 uses 2 consecutive digits, let's
+ consider it as one unit. Thus, initially, we had 3 digits. We considered 13 as one unit, therefore we now only have two slots
+ i.e __ __ out of which in one slot, 13 will go and the remaining slot can be filled with any from [0, 9]
+ Thus, 2C1 for choosing one of the two slots and 10 choices for filling the remaining slot with any from [0, 9]
+ So, we have : 10^3 - 2C1*10
+ 
+ Let's consider the case for N = 4 ie. 4 digits : __ __ __ __
+ Total = 10^4 
+ Out of this, we deduct those numbers having 13 in them, similar as above, we consider 13 as one unit. Thus, now we have 3 slots
+ __ __ __ We can place 13 in any one of these slots, and the other two will be filled with digits from [0, 9]
+ Thus, we have : 10^4 - 3C1*(10^2) 
+ Now, comes the "inclusion exclusion part", while deducting the numbers having 13 in them , we overcounted.
+ For example, suppose 13 went to the 1st slot (we are talking about these slots : __ __ __ ) and we have : 
+ 1 3 __ __ 
+ Suppose the 3rd slot if filled with 1 and 4th slot is filled with 3, so we have : 
+ 1 3 1 3
+ This number is deducted when the 1st slot was filled with 13
+ Now supposed 13 went to slot 3, then we have : 
+ __ __ 1 3
+ Suppose the 1st slot gets filled with 1 and 2nd slot is filled with 3, so we have : 
+ 1 3 1 3
+ This number is again deducted when the 3rd slot was filled with 13
+ Thus the same number was deducted more than once, i.e overcouting occured, so we need to add back this number
+ Note that 13 going to the 2nd slot didn't create another repeated number.
+ 
+ Thus following the inc-exc princ, we add the numbers that have two 13's in them, i.e
+ So now since we have two 13's to fill with, the number of slots now become 2
+ __ __ , we have to place two similar objects (13's) in those two slots which can be done in 2C2 ways i.e 1 way (or 2!/2! ways)
+ 
+ Therefore finally, we have : 
+ 10^4 - 3C1*(10^2) + 2C2
+ 
+ Let's rewrite it as : 
+ N = 4 --->             f(4)  =  4C0*(10^4) - 3C1*(10^2) + 2C2(10^0)  
+ Similarly;
+ 
+ N = 5 --->             f(5)  =  5C0*(10^5) - 4C1*(10^3) + 3C2*(10^1)
+ 
+ N = 6 --->             f(6)  =  6C0*(10^6) - 5C1*(10^4) + 4C2*(10^2) - 3C3*(10^0)
+ 
+ Generalizing, we have : 
+ 
+ N = k --->             f(k)  =  kC0*(10^k) - (k-1)C1*(10^(k-2)) + (k-2)C2*(10^(k-4)) - (k-3)C3*(10^(k-6)) ...
+ 
+ 
+ N = k + 1 --->        f(k+1) =  (k+1)C0*(10^(k+1)) - kC1*(10^(k-1)) + (k-1)C2*(10^(k-3)) - (k-2)C3*(10^(k-5)) ...
+ 
+ 
+ Upon observing we can see 10*f(k) has some similar terms with f(k+1) lets try to do 10*f(k) - f(k+1), we get
+ 
+ (kC0 - (k+1)C0)*(10^(k+1)) + (kC1 - (k-1)C1)*(10^(k-1)) - ((k-1)C2 - (k-2)C2)*(10^(k-3)) + ((k-2)C3 - (k-3)C3)*(10^(k-5) ...
+ 
+ Now, we know that nCr + nCr+1 = n+1Cr+1 , i.e n+1Cr+1 - nCr+1 = nCr, using this reduction, we can simply the above into :
+ 
+ 0 + (k-1)C0*(10^(k-1)) - (k-2)C1*(10^(k-3)) + (k-3)C2*(10^(k-5)) ...
+ 
+
+ which is nothing but f(k-1)
+ 
+ Thus, we obtain the relation : 10*f(k) - f(k+1) = f(k-1) 
+                         ==>    f(k+1) = 10*f(k) - f(k-1)
+                         
+*/
