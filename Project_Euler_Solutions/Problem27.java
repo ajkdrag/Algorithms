@@ -9,7 +9,6 @@ public class Problem27 {
 }
 
 class Solution {
-
 	static int[] sieve;
 	static int limit;
 
@@ -28,7 +27,7 @@ class Solution {
 				int p = b;
 				for (int n = a;; n += 2) {
 					p = p + n;
-					if (isPrime(p) && p <= limit)++count;
+					if (p <= limit && sieve[p] == 0)++count;
 					else {
 						p = p - n;
 						break;
@@ -55,17 +54,6 @@ class Solution {
 		return temp >> 1;
 	}
 
-	static boolean isPrime(int n) {
-		if (n == 2) return true;
-		if (n < 3) return false;
-		if (n <= limit) return sieve[n] == 0;
-		for (int i = 1; i <= limit; ++i) {
-			if (i * i > n) break;
-			if (sieve[i] == 0 && (n % i == 0)) return false;
-		}
-		return true;
-	}
-
 	static void fillSieve(int limit) {
 		sieve = new int[limit + 1];
 		sieve[0] = 1;
@@ -78,5 +66,4 @@ class Solution {
 			}
 		}
 	}
-
 }
