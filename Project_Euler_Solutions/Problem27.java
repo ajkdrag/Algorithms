@@ -8,7 +8,7 @@ public class Problem27 {
 	}
 }
 
-class Solution {
+class Solution27 {
 	static int[] sieve;
 	static int limit;
 
