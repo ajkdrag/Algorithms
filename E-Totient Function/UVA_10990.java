@@ -14,8 +14,9 @@ import java.util.InputMismatchException;
 
 public class Main {
     public static void main(String[] args) throws IOException{
-        SolutionSODF.fillPhiSieve(2000000);
-        SolutionSODF.fillPreSums(2000000);
+        int limit = 2000000;
+        SolutionSODF.fillPhiSieve(limit);
+        SolutionSODF.fillPreSums(limit);
         Scan scan=new Scan();
 		Print print=new Print();
 		int t = scan.scanInt();
@@ -31,13 +32,8 @@ public class Main {
 class SolutionSODF {
     static int[] phiSieve;
     static int[] preSums;
-    static int len;
     
     static int solve(int a, int b){
-        // int res = 0;
-        // for(int i = a; i <= b; ++i){
-        //     res += getSteps(i);
-        // }
         return preSums[b] - preSums[a - 1];
     }
     
@@ -59,25 +55,12 @@ class SolutionSODF {
             if((n&1) == 1) return getSteps(n);
             return 1 + getSteps(n);
         }  
-        return 1 + getSteps(getPhi(n));
-    }
-    
-    static int getPhi(int n){
-        if((n&1) == 1) return phiSieve[n>>1];
-        int res = 1;
-        while((n&1) == 0) {
-            res = res << 1;
-            n >>= 1;
-        }
-        
-        res >>= 1;
-        return res * phiSieve[n>>1];
+       return 1 + getSteps(phiSieve[n>>1]);
     }
     
     static void fillPhiSieve(int limit){
-        len = (limit + 1) >> 1;
+        int len = (limit + 1)>>1;
         phiSieve = new int[len];
-        
         phiSieve[0] = 1;
         phiSieve[1] = 2;
         
@@ -85,7 +68,7 @@ class SolutionSODF {
             phiSieve[i] = i<<1;
         }
         
-        for(int i = 3; i <= limit>>1; i += 2){
+        for(int i = 3; i <= len; i += 2){
             if(phiSieve[i>>1] == i - 1){
                 for(int j = (i<<2) - i; j <= limit; j += i<<1){
                     int val = phiSieve[j>>1];
