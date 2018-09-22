@@ -3,10 +3,11 @@
  * 
  * Above problem is a nice application of Euler's Totient Function (φ)
  * We can observe that the number of times a fraction with the same denominator occurs = φ(denominator)
- * Edge cases like for φ(1) can be handled exclusively. Trivially, φ(1) = 1, but here φ(1) is taken to be 2. Since we have both 0/1 and 1/1
+ * Edge cases like for φ(1) can be handled exclusively. Trivially, φ(1) = 1, but here φ(1) is taken to be 2.
+ * Since we have both 0/1 and 1/1
  * We try to find the denominator first and then the numerator of the Kth fraction
  * 
- * FINDING DENOMINATOR :
+ * 	FINDING DENOMINATOR :
  * 		
  * 		Method 1:
  * 			Keep summing up φ(i) for all integers starting from 1 and stop when the sum is >= K
@@ -15,70 +16,84 @@
  * 		
  * 		Method 2:
  * 			Very similar to the previous method. Note that the denominator isn't as huge as the K value can get.
- * 			Given the constraints for 'K' we come up with an estimate of the max denominator, which can be probably around 200000 ( we go till 200031) here
- * 			Hence, we can form a cumulative sum array which stores the sum of φ values upto that index and then perform a binary search to 
+ * 			Given the constraints for 'K' we come up with an estimate of the max denominator, which can be probably 
+ *			around 200000 ( we go till 200031) here
+ * 			Hence, we can form a cumulative sum array which stores the sum of φ values upto that index 
+ *			and then perform a binary search to 
  * 			get the smallest index at which the cumulative sum >= K. That index is the required denominator
  * 					
- * 		Note that in both the above methods, we need to pre-compute the φ values for integers upto 200000, in order to avoid computing it everytime.
- * 		Here, we first create a sieve of primes and along with storing each prime, we also store prime factors for the non-primes.
+ * 		Note that in both the above methods, we need to pre-compute the φ values for integers upto 200000,
+ *		in order to avoid computing it everytime.
+ * 		We first create a sieve of primes and along with storing each prime, we also store prime factors for the non-primes.
  * 		This simplifies the process of finding the φ values for the integers, since we stored the prime factors previously.
- * 		After that we can choose to opt for either do a linear scan (i.e method 1) or make another cumulative sum array and do a binary search (i.e method 2)
+ * 		After that we can choose to opt for either do a linear scan (i.e method 1) 
+ * 		or make another cumulative sum array and do a binary search (i.e method 2)
  * 	
- * FINDING NUMERATOR :
+ * 	FINDING NUMERATOR :
  * 		
- * 		Once we got the denominator 'd'. The (k - Sum(φ(i)))th number that's coprime to 'd', where 'i' goes from 1 to d-1, is the required numerator
+ * 		Once we got the denominator 'd'. The (k - Sum(φ(i)))th number that's coprime to 'd', where 'i' goes from 1 to d-1, 
+ *		is the required numerator
  * 		since for each denominator, the mini-series of fractions with that denominator always starts with 1/d (except for d = 0)
  * 		we can simply output "1/d" if (k - Sum(φ(i))) results in '1'. Let's call (k - Sum(φ(i))) as N.
  * 		Thus goal is to find the Nth comprime to 'd'
  * 
  * 		Method 1 : 
- *			For all numbers 'i' upto 'd' compute the gcd(i,d). If gcd equals to '1', we know that number is coprime, so we increment our count
- *			Once count hits 'K', we stop and the number in consideration is the requried numerator
+ *			For all numbers 'i' upto 'd' compute the gcd(i,d). If gcd equals to '1', we know that number is coprime, 
+ *			so we increment our count. Once count=='K', we stop and the number in consideration is the requried numerator
  *
  *		Method 2 :
- *			We are interested in finding the Nth coprime to 'd' which is equivalent to finding the smallest 'X' [ 1 < X < d ] such that 
- *			the count of the #comprimes to 'd',  till X is <= K 
- *			eg : suppose d = 6 , coprimes to 6 are [1,5] only
+ *			We are interested in finding the Nth coprime to 'd' which is equivalent to 
+ *			finding the smallest 'X' [ 1 < X < d ] such that the count of the #comprimes to 'd',  till X is <= K 
+ *			eg : suppose d = 6 , coprimes to 6 are [1,5] only,
  *			Suppose K = 1, then X will be 1, and suppose K = 2, X will be 5
  *			Supoose d = 8, coprimes to 8 are [1,3,5,7], and k = 3 say
- *			then X will be 5 because 5 is the smallest number in (1,8) such that the number of coprimes till 5 (inclusive) is equal to 3, i.e {1,3,5}
+ *			then X will be 5 because 5 is the smallest number in (1,8) 
+ *			such that the number of coprimes till 5 (inclusive) is equal to 3, i.e {1,3,5}
  *			Now finding this 'X' can be done using Binary Search approach!
- *			Suppose we are able to 'count' the number of coprimes to 'd', till a particular 'limit'. We can apply Binary Search as follows :
- *				limit is first mid of (1,d) if count(limit) >= K, we reduce our search to (1,mid] else, search in [mid+1,d) and so on
+ *			Suppose we are able to 'count' the number of coprimes to 'd', till a particular 'limit'. 
+ *			We can apply Binary Search as follows :
+ *				limit is first mid of (1,d) if count(limit) >= K, we reduce our search to (1,mid] else,
+ *				search in [mid+1,d) and so on.
  *			
  *			Now we come to the part of counting number of coprimes till a particular 'limit'
  *			We apply INCLUSION-EXCLUSION Principle to compute this :
- *				Suppose d = 30, it's prime factors are {2,3,5} Thus coprimes of 'd' means those numbers who don't share a prime factor in {2,3,5}
- *				Thuse we can write the number of coprimes till a limit X as = X - (X/2) - (X/3) - (X/5) + (X/6) + (X/15) + (X/10) - (X/30) 
+ *				Suppose d = 30, it's prime factors are {2,3,5} 
+ *				Thus coprimes of 'd' means those numbers who don't share a prime factor in {2,3,5}
+ *				Thuse we can write the number of coprimes till a limit X as :
+ *				X - (X/2) - (X/3) - (X/5) + (X/6) + (X/15) + (X/10) - (X/30) 
  *				basically 'crossing' out the all multiples (numbers who have a factor) of 2,3 and 5 till X 
  *			
  * 				In order to do this, we generalize the expression as : say prime factors as P = {p1, p2...pn}
- * 					X/(subsets of size 1)			  X/(subsets of size 2)						X/(subset of size n)	
+ * 				    X/(subsets of size 1)           X/(subsets of size 2)		       X/(subset of size n)	
  * 				X - [(X/p1) - (X/p2) ...] + [(X/(p1*p2)) + (X/(p2*p3)) + (X/(p1*p3))...] +/- ... [X/(p1*p2*...pn)]
  * 					
- * 				Observe that the sign depends on the whether the subset size is even or odd! (if even, then +ve, if odd, then -ve)
+ * 				Observe that the sign depends on the whether the subset size is even or odd! (even = +ve, odd = -ve)
  * 				Now if the number of elements in the set P is 'n', then the number of possible subsets can be 2^n 
- * 				Also, observe that the size of the set P in our problem can't go too big, generally of size 6, since the smallest number which has
- * 				7 distinct prime factors is (2*3*5*7*11*13*17) = 510510 which is well over the 200031 denominator limit we found out previously, thus
- * 				the max number of distinct prime factors will be 6, therefore max(n) = 6, hence total possible combinations will be 2^6 = 64
+ * 				Also, observe that the size of the set P in our problem can't go too big, generally of size 6,
+ *				since the smallest number which has 7 distinct prime factors is (2*3*5*7*11*13*17) = 510510 
+ *				which is well over the 200031 denominator limit we found out previously, thus the max number of distinct
+ *				prime factors will be 6, therefore max(n) = 6, hence total possible combinations will be 2^6 = 64
  * 				
  * 				Now our algo works as follows :
- * 					Choose a subset from P and do -->[ X/(product of elements in that subset) ]and the sign = number of elements in that subset
+ * 					Choose a subset from P and do -->[ X/(product of elements in that subset) ]
+ *					and the sign = number of elements in that subset
  * 					Total possible subsets will be at max 2^n.
  * 					We loop with a 'state' variable that goes from 1 to 2^n - 1. where if state = 1 :
  * 						
- * 					i.e state = 1 = 	...0 		0 		0 		0 		0 		1 
- * 										...   					   pn-2	   pn-1		pn
+ * 					i.e state = 1 =  ...	0	   0	      0		0	  1 
+ * 										     pn-2      pn-1	  pn
  * 
- * 					i.e each bit corresponds to the 'state' of whether the corresponding prime factor is put in the subset or not.
- * 					since the number of possible subsets are at max (2^n - 1) if we exclude the case where none are selected
- * 					we get a nice way to implement the algorithm!
+ * 					i.e each bit corresponds to the 'state' of whether the corresponding prime factor
+ *					is put in the subset or not. Since the number of possible subsets are at max (2^n - 1) 
+ *					if we exclude the case where none are selected we get a nice way to implement the algorithm!
  * 					
- * 					eg : all 1's (i.e the 'state' 2^n - 1) indicate that all the prime factors are included in the subset
- * 					state 2 indicates that 2nd last prime is only included... state 3 indicates pn-1 and pn are selected, rest are not.. and so on!
+ * 					eg : all 1's (i.e the 'state' 2^n - 1) indicate that all the prime factors are included
+ * 					state 2 indicates that 2nd last prime is only included... 
+ *					state 3 indicates pn-1 and pn are selected, rest are not.. and so on!
  * 
- * 					Getting the corresponding bit from a number is just a matter of right shifting the number specifiic number of times
- * 					We can even switch up the correspondance such that the LSB corresponds to p1 instead of pn and so on!
+ * 					Getting the corresponding bit from a number is just a matter of 
+ *					right shifting the number specifiic number of times. We can even switch up the correspondance
+ *					such that the LSB corresponds to p1 instead of pn and so on!
  * 
  * 				This way we can implement the inclusion-exclusion expression.
  * 
@@ -112,7 +127,8 @@ class IrreducibleFractionSolution {
 	ArrayList<Integer>[] p;
 	
 	IrreducibleFractionSolution (){
-		// precompute the phi values for the integers upto 200031 since as mentioned, the denominator doesn't get as huge as 'K' value
+		// precompute the phi values for the integers upto 200031 since as mentioned, 
+		// the denominator doesn't get as huge as 'K' value
 		calcPhi(200031);
 	}
 
@@ -155,21 +171,27 @@ class IrreducibleFractionSolution {
 		int res = valTill;
 		int num_pfactors = p[coprimesTo].size();
 		// we iterate over all the 'subset states' of the prime factors, to be used in the inclusion-exclusion expression
-		// 'i' represents the 'subset state' that goes from 1 to 2^n - 1, where n is the number of prime factors of the denom (i.e coprimesTo)
+		// 'i' represents the 'subset state' that goes from 1 to 2^n - 1, 
+		// where n is the number of prime factors of the denom (i.e coprimesTo)
 		for (int i = 1; i < (1 << num_pfactors); i++) {	
 			// product holds the product of the primes in the current subset
 			int product = 1;
 			// we also count the number of elements in the current subset
-			// since we earlier stated that even # elements imply a +ve sign in (X/product_of_elements_in_current_subset), similarly for odd # elements
+			// since we earlier stated that even # elements imply a +ve sign in (X/product_of_elements_in_current_subset), 
+			// similarly for odd # elements
 			int count = 0;
 			// we iterate over all the prime factors and check if it can be included in the current subset or not
 			// we do this by checking the 'correspondance' we described in the algo
-			// subset state of '1' in binary is represented as : ...0001 i.e last prime factor should be included, rest not.
-			// subset state of '2' in binary is represented as : ...0010 i.e 2nd last prime factor should only be included, rest not.
-			// subset state of '3' in binary is represented as : ...0011 i.e the last two prime factors should only be included, rest not.
+			// subset state of '1' in binary is represented as : ...0001 
+			// i.e last prime factor should be included, rest not.
+			// subset state of '2' in binary is represented as : ...0010 
+			// i.e 2nd last prime factor should only be included, rest not.
+			// subset state of '3' in binary is represented as : ...0011 
+			// i.e the last two prime factors should only be included, rest not.
 			// and so on...
 			for (int j = 0; j < num_pfactors; j++) {
-				// right shifting the bits of the 'subset state' accordingly and checking if the LSB is set or not (by AND with 1) does the job
+				// right shifting the bits of the 'subset state' accordingly and checking if the LSB is set or not 
+				// (by AND with 1) does the job
 				if ((1 & i>>num_pfactors-1-j) == 1) {
 					product *= p[coprimesTo].get(j);
 					// keep track of the number of primes 'included' in the product/subset
@@ -218,7 +240,8 @@ class IrreducibleFractionSolution {
 		phi[1] = 2;
 		
 		// since we have found out the prime factors earlier, we can use the formula for finding φ
-		// φ(n) where n = p1^a1 * p2^a2 * p3^a3 ... * pn^an ; equals to n(1 - 1/p1)(1 - 1/p2)...(1 - 1/pn) so, we just needed the prime factors p1,p2...pn
+		// φ(n) where n = p1^a1 * p2^a2 * p3^a3 ... * pn^an ; equals to n(1 - 1/p1)(1 - 1/p2)...(1 - 1/pn) 
+		// so, we just needed the prime factors p1,p2...pn
 		for (int i = 2; i < n; i++) {
 			phi[i] = i;
 			for (int j = 0; j < p[i].size(); j++) {
@@ -241,7 +264,8 @@ class IrreducibleFractionSolution {
 		p[1].add(1); // trivial case
 		for (int i = 2; i < n; i++) {
 			// if the integer in consideration has no prime factor, it implies that it itself is prime
-			// if this integer's Arraylist size is >= 1, then it means it's not prime, so we 'continue' to the next iteration without doing anything
+			// if this integer's Arraylist size is >= 1, then it means it's not prime, 
+			// so we 'continue' to the next iteration without doing anything
 			if (p[i].size() >= 1)
 				continue;	
 			// if the integer is prime, we add itself to it's list of prime factors
