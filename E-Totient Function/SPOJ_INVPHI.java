@@ -114,7 +114,14 @@
 	
 	Thus, we can take these cases into account and write a recursive solution to compute the smallest IET value for 'k'
 	
-	Observations :
+							# # # # # # # # # #
+	----------------------------------------------- #  OBSERVATIONS:  # ------------------------------------------------
+							# # # # # # # # # #
+							
+							
+	From (2), we have a conjecture that : There are infinite primes of the form : φ(p^a) + 1
+	A consequence of this conjecture is that there are infinite numbers such that their totient values are perfect squares.
+	
 	Suppose we have 'n' as : p^a * q^b * r^c { p < q < r and a, b, c > 0 }
 	and φ(p^a) == φ(q^b * r^c)
 	
@@ -171,6 +178,119 @@
 	Thus our number 'n' which can be partitioned in two "sub-phis" that give equal values is (p^a * q * r)
 	i.e  n = 2^13 * 17 * 257 = 35790848
 	and it's totient value will be : square of ((q - 1) * (r - 1))  = square(16 * 256) = 16777216
+	
+	-------------------------------------------------------------------------------------------------------------------
+	
+	Another observation is that there are infinite numbers (even) such that they have no totient inverses.
+	i.e there are even numbers 'x' such that there is no 'n' for which φ(n) = x
+	eg : 14, 26, etc.
+	Let's consider an even number 'x' of the form 2*(p^a) (p > 2 and p is an odd prime)
+	Thus, if this number is totient value of some number 'n', we have : φ(n) = 2*(p^a)
+	Now 'n' can either be a prime such that φ(n) = n - 1 = 2*(p^a)
+	
+	==> n = 2*(p^a) + 1  and n is a prime   -------------> (9)
+	
+	Let's say 'n' is not a prime, in that case, it can be written as : n can be factored into product of prime powers
+	Now since, x = 2*(p^a) ==> the prime power in 'x' i.e p^a must have come from 'n' 
+	Also note that since 'x' is a product of 2 and an odd number, it has only one '2' in it.
+	This implies that 'n' cannot have more than one odd prime factor. Infact 'n' has only one odd prime factor.
+	Even if 'n' has 2 as one of it's prime factor, it can't be the case that 'n' is a factor of a power of 2 greater than 1.
+	For now, let us only consider odd primes in our discussion.
+	Thus, we have : n = p^(a + 1) 
+	==> φ(n) = p^a * (p - 1) = 2 * (p^a)
+	==> p - 1 = 2
+	==> p = 3
+	Thus p = 3 is the only prime number that satisfies such a criteria.
+	In other words there are no other primes 'p' such that 2*(p^a) has an inverve image in φ (if (9) doesn't hold true)
+	If we take an odd prime that's not 3 such that 2*(p^a) + 1 isn't a prime, then 2*(p^a) doesn't have an inverse in φ
+	('a' is any whole number). if a = 0, 2*(p^a) + 1 = 3 which is a prime, so better to take a >= 1
+	
+	So, now let's choose some odd primes (not equal to 3), say p = 5,
+	if (a = 1), we have 2*(5^a) + 1 = 11 which is a prime,
+	if (a = 2), we have 2*(5^2) + 1 = 51 which is not a prime.
+	==> 2*(5^2) = 50 doesn't have an inverse image in φ 
+	if (a = 3), we have 2*(5^3) + 1 = 251 which is a prime.
+	if (a = 4), we have 2*(5^4) + 1 = 1251 which is not a prime.
+	==> 2*(5^4) = 1250 doesn't have an inverse image in φ
+	
+	Observe that, 14, comes when we pick p = 7 and a = 1, 2*(7^a) + 1 = 15 which is not prime ==> 2*7 = 14 has no inverse in φ
+	Similarly, we can check for other primes and their powers as well.
+	
+	Now, let's consider 'x' to be of the form 2*(p^a)*(q^b) (p < q and p and q are odd primes with a,b as +ve exponents)
+	Again we check if 2*(p^a)*(q^b) + 1 is a prime or not. If it is a prime, we are done, 'x' has an inverse. If not we proceed.
+	Since, again we have only one 2 in 'x', it has to be the case that 'n' has only one odd prime factor.
+	Note that since 'x' has 'p^a' and 'q^b' in it. They must have come from 'n'. i.e 'n' is either 'p^(a + 1)' or 'q^(b + 1)'
+	If n = p^(a + 1), φ(n) = p^a * (p - 1)
+	==> p^a *(p - 1) = 2*(p^a)*(q^b)
+	==> (p - 1) = 2*(q^b) which isn't possible since (p < q and a,b are positive numbers)
+	
+	Therefore, n = q^(b + 1), φ(n) = q^b * (q - 1)
+	==> q^b * (q - 1) = 2*(p^a)*(q^b)
+	==> q - 1 = 2*(p^a)
+	==> q = 2*(p^a) + 1
+	
+	From this expression we can get the following results :
+	1) If we already have a number of the 2*(p^a) which has no inverse in φ, we can get other numbers that don't have 
+	   an inverse in φ, by multiplying with (q^b) where q is different odd prime > a, and b is a positive number.
+	   Keep in mind that the number in consideration when added with 1, doesn't result in a prime.
+	
+	2) If the number 2*(p^a) is such that 2*(p^a) + 1 is a prime, even then we can generate a number that doesn't have an
+	   inverse in φ as follows : Take any other prime 'P' > p, except 2*(p^a) + 1 and, if 2*(p^a)*(P^b) + 1 isn't a prime,
+	   then 2*(p^a)*(P^b) has no inverse in φ, where b is a positive number.
+	   
+   	e.g : Previously we generated some numbers : 14, 26, 50, 1250 etc which have no inverse in φ
+	14 = 2*7 
+	Let's take a prime number greater than 7, say : 11 and a = 1
+	==> 14*11 = 154 and 154 + 1 = 155 isn't a prime
+	==> 154 is a number that has no inverse in φ
+	If a = 2,
+	==> 14*11*11 = 1694 and 1694 + 1 = 1695 in't a prime
+	==> 1694 is a number that has no inverse in φ
+	Similarly, we can obtain for other values of 'a', 'p', 'q' and 'b'
+	
+	Let's consider a number of the form 2*(p^a) which has an inverse in φ
+	Say, that number is 2*(3^2) = 18 which has inverse images in φ
+	It is seen that 18 + 1 = 19 which is a prime number. Thus excluding this prime, if we take any other prime P > 3
+	such that 18 * (P^b) + 1 isn't a prime, we can say that 18*(P^b) has no inverse.
+	Let's take P as 5 and b = 1,
+	==> 18*(5^b) + 1 = 91 which is not a prime.
+	==> 18*5 = 90 has no inverse in φ
+	for b = 2,
+	==> 18*(5^2) + 1 = 451 which is not a prime.
+	==> 18*(5^2) = 450 has no inverse in φ
+	Similarly, we can obtain for other values of 'a', 'p', 'P', 'b'
+	
+	We can extend this further in a similar fashion to 'x' of forms as : 2*(p^a)*(q^b)(r^c)...
+	
+	-------------------------------------------------------------------------------------------------------------------
+	
+	Recurrence relations for finding number of steps to reach 1
+	i.e say n = 12,
+	φ(12) = 4
+	φ(4) = 2
+	φ(2) = 1
+	Thus, it took 3 steps for 'n' to reach 1.
+	For any number 'n' , we have
+	
+	Case 1 : 'n' is odd : Steps(n) = Steps(φ(n)) + 1
+	Case 2 : 'n' is even and 'n/2' is odd : Steps(n) = Steps(n/2)	(Since in this case φ(n) = φ(n/2))
+	Case 3 : 'n' is even and 'n/2' is even : Steps(n) = Steps(n/2) + 1
+	
+	Proof of Case 3 :
+	  	This can be proved analytically as follows :
+		Let the steps 'k' follows to reach 1 be as follows (let the number of steps be 's')
+		k --> φ(k) --> φ(φ(k)) --> φ(φ(φ(k))) ... 	--> 1
+
+		Now, we consider 2*k and see it's steps as follows :
+		2*k --> φ(2*k) --> φ(φ(2*k)) --> φ(φ(φ(2*k))) ... 
+		which is equal to :
+		2*k --> 2*φ(k) --> 2*φ(φ(k)) --> 2*φ(φ(φ(k))) ...
+
+		Thus it is clear that after 's' steps, 2*k will end up at 2*1 i.e 2 and thus it needs one extra step to reach 1
+
+		Hence, we have : Step(2*k) = 1 + step(k)
+		
+	-------------------------------------------------------------------------------------------------------------------
 	
 */
 
