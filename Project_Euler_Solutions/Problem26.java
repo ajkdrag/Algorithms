@@ -34,7 +34,7 @@ class Solution26 {
             if((p - 1)%i == 0){
                 if(modExp(10,i,p) == 1) 
                     return i;
-                else if(modExp(10,(p-1)/i,p) == 1) cycle_len = Math.min(cycle_len,(p-1)/i);
+                else if(modExp(10,(p-1)/i,p) == 1) cycle_len = (p-1)/i;
             }
         }
         return cycle_len;
