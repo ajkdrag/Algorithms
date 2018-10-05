@@ -31,7 +31,7 @@ class Solution40 {
         int digit = getDigit(num, slot, place);
         return digit;
     }   
-    
+    // binary search can also be used, but since it's a very small array, so no need for that.
     static int getSlot(int n){
         int i = 0;
         while(n > pref[i]){
