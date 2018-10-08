@@ -57,7 +57,50 @@ class Solution36 {
     }
 }
 
-class Solution36_Alternate {
+class Solution36_alternate {
+    static int solve(int limit){
+        int sum = 0;
+        // oddlength 
+        int start = 1;
+        int pal = generatePal(start,10,true);
+        while(pal <= limit){
+            if((pal&1) == 1 && isPalindromeBase2(pal)) sum += pal;
+            ++start;
+            pal = generatePal(start,10,true);
+        }
+        
+        // evenlength
+        start = 1;
+        pal = generatePal(start,10,false);
+        while(pal <= limit){
+            if((pal&1) == 1 && isPalindromeBase2(pal)) sum += pal;
+            ++start;
+            pal = generatePal(start,10,false);
+        }
+        
+       return sum;
+    }
     
+    static boolean isPalindromeBase2(int num){
+        int or = num;
+        int rev = 0;
+        while(num > 0){
+            rev = (rev<<1) + (num&1);
+            num>>=1;
+        }
+        return or == rev;
+    }
+    
+    static int generatePal(int n, int base, boolean oddLength){
+        int cpy = n;
+        if(oddLength) cpy /= base;
+        while(cpy > 0){
+            n = n*base + cpy%base;
+            cpy/=base;
+        }
+        return n;
+    }
 }
+
+
 
