@@ -19,7 +19,8 @@ class Solution32 {
     static void solve() {
         // 3 x 2
         for(int i = 123; i <= 987; ++i){
-            if(i%10 == 0) continue;
+            int last_d = i%10;
+            if(last_d == 0 || last_d == 1) continue;
             boolean mul = true;
             reset();
             int cpy = i;
@@ -35,7 +36,8 @@ class Solution32 {
             
             if(mul) {
                 for(int j = 12; j <= 98; ++j){
-                    if(i%10 == 0) continue;
+                    int last_d2 = j%10;
+                    if(last_d2 == 0 || last_d2 == 1 || last_d == last_d2) continue;
                     mul = true;
                     cpy = j;
                     while(cpy > 0){
