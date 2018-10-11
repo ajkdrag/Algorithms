@@ -107,7 +107,7 @@ class Solution49 {
             if(perm_map.containsKey(perm_val)){
                 index = perm_map.get(perm_val);
                 int size = permPrimes[index].size();
-                if(size >= 3) {
+                if(size >= 2) {
                     searchForTrio(index, p, size);
                 }
                 permPrimes[index].add(p);
