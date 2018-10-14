@@ -26,17 +26,19 @@ class Solution34 {
             int sum = 0;
             int num = 0;
             boolean startCounting = false;
+          
             for (int i = 0; i < r; i++) 
-                {
-                    int val = chosen[i];
-                    num = num*10 + val;
-                    if(val > 0) startCounting = true;
-                    if(startCounting) sum += fact[val];
-                }
-                if(sum < num || sum < 10) return;
-                if(calcFactSum(sum) == sum){
-                    res += sum;
-                } 
+            {
+                int val = chosen[i];
+                num = num*10 + val;
+                if(val > 0) startCounting = true;
+                if(startCounting) sum += fact[val];
+            }
+          
+            if(sum < num || sum < 10) return;
+            if(calcFactSum(sum) == sum){
+                res += sum;
+            } 
             return; 
         } 
         for (int i = start; i <= end; i++) 
