@@ -70,7 +70,7 @@ class Solution34 {
 
 /*
 
-  Non-recursive solution (same as above, but generating of combinations is done iteratively)
+  Non-recursive solution (same as above, but generating combinations is done iteratively)
 
 */
 
