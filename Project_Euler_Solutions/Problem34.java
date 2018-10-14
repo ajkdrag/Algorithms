@@ -11,7 +11,6 @@ public class Problem34 {
 }
 
 class Solution34 {
-    static int pow;
     static int res;
     static int[] fact = {1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
     
