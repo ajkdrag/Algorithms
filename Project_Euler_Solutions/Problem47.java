@@ -14,20 +14,21 @@ class Solution47 {
     static void solve(){
         int limit = 150000;
         int[] arr = new int[limit+1];
-        int i, j, k;
+        int i, j, k = 0;
         
-        for (i = 2; i <= limit-3; ++i)
+        for (i = 2; k < 4 && i <= limit; ++i)
         {
             j = i;
             if(arr[j] == 4){
-                if(arr[j+1] == 4 && arr[j+2] == 4 && arr[j+3] == 4){
-                    System.out.println(j);
-                    break;
-                } 
+                ++k;
             }
-            if (arr[j] == 0) 
-                for (j<<=1; j <= limit; j += i) arr[j]++;
+            else{
+                k = 0;
+                if (arr[j] == 0) 
+                    for (j<<=1; j <= limit; j += i) arr[j]++;
+            }
         }
+        if(i <= limit) System.out.println(i - 4);
     }
 }
 
