@@ -33,14 +33,18 @@ class Solution52 {
     }
     
     static boolean isPerm(int a, int b){
-        int r1,r2 = 0;
+        int r = 0;
         mask = 0L;
         while(a > 0){
-            r1 = a%10;
-            r2 = b%10;
-            mask += (1<<(r1<<2));
-            mask -= (1<<(r2<<2));
+            r = a%10;
+            mask += (1<<(r<<2));
             a/=10;
+           
+        }
+        
+        while(b > 0){
+            r = b%10;
+            mask -= (1<<(r<<2));
             b/=10;
         }
         
