@@ -57,6 +57,32 @@ class Solution55 {
     }
 }
 
+// Brute-force with no caching (runs faster than above)
+
+import java.math.BigInteger;
+
+public class Main {
+    public static void main(String abcd[]) {
+        int d = 0;
+        x: for (int b = 1; b < 10000; b++) {
+            BigInteger a = BigInteger.valueOf(b);
+            for (int c = 1; c <= 50; c++) {
+                a = a.add(rev(a));
+                if (a.equals(rev(a))) {
+                    continue x;
+                }
+            }
+            d++;
+        }
+        System.out.println(d);
+    }
+    static BigInteger rev(BigInteger a) {
+        StringBuilder sb = new StringBuilder(a.toString());
+        return new BigInteger(sb.reverse().toString());
+    }
+}
+
+
 // Iterative solution with even more caching (faster than above)
 
 import java.math.BigInteger;
