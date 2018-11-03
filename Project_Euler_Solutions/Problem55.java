@@ -83,7 +83,7 @@ public class Main {
 }
 
 
-// Iterative solution with even more caching (faster than above)
+// Iterative solution with even more caching (slightly faster than above)
 
 import java.math.BigInteger;
 import java.util.Stack;
