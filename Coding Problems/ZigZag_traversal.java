@@ -31,7 +31,7 @@ public class Zig_zag {
         
         System.out.print("Zig-Zag traversal : ");
         boolean zig = true;
-        for(int s = 0; s <= 4; ++s){
+        for(int s = 0; s <= (m+n-2); ++s){
             if((s&1)==0){ 
                 zig = true;
                 i = Math.min(s,m - 1);
