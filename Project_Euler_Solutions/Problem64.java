@@ -22,6 +22,7 @@ class Solution64 {
                 if(i <= limit) ++count;
                 continue;
             }
+            if((i&3) == 0) continue;
             if((period_len(i,sqrt-1) & 1) == 1) ++count;
         }
         return count;
