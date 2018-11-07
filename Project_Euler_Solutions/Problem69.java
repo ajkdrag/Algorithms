@@ -6,7 +6,7 @@
 
 public class Problem69 {
     public static void main(String args[]) {
-        System.out.println(Solution69.solve(1000004));
+        System.out.println(Solution69.solve(1000001));
     }
 }
 
