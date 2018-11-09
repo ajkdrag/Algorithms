@@ -31,4 +31,23 @@ class Solution71 {
     }
 }
 
+// Using farey sequence property, two consecutive members differ by 1, we have : 
+
+public class Problem71 {
+    public static void main(String args[]) {
+        System.out.println(Solution71.solve(3,7,1000000));
+    }
+}
+
+class Solution71 {
+    static int solve(int numer, int deno, int limit){
+        double temp = 0.0;
+        while(limit-- > 2){
+            temp = (limit*numer - 1)/deno;
+            if(temp == (int)(temp)) break;
+        }
+        return (int)temp;
+    }
+}
+
 
