@@ -1,9 +1,3 @@
-/*
-
-  Problem at : https://projecteuler.net/problem=51
-
-*/
-
 public class Problem51 {
     public static void main(String args[]) {
         System.out.println(Solution51.solve());
@@ -37,9 +31,12 @@ class Solution51 {
     
     static int solve(){
         for(int i = 11; i <= 999; i+=2){
-            if(i%5 == 0 || i%3 == 0) continue;
-            if(i < 100) search(pent_mask, 5, i);
-            else search(hex_mask, 6, i);
+            if(i%3 == 0 || i%5 == 0) continue;
+            if(i >= 100) search(hex_mask, 6, i);
+            else {
+                search(pent_mask,5, i);
+                search(hex_mask, 6, i);
+            }
         }
         return result;
     }
@@ -97,5 +94,4 @@ class Solution51 {
         return true;
     }
 }
-
 
