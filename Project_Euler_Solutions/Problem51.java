@@ -1,8 +1,14 @@
-public class Problem51 {
-    public static void main(String args[]) {
-        System.out.println(Solution51.solve());
-    }
-}
+/*
+ 
+   Problem at : https://projecteuler.net/problem=51
+ 
+ */
+ 
+ public class Problem51 {
+     public static void main(String args[]) {
+         System.out.println(Solution51.solve());
+     }
+ }
 
 class Solution51 {
     /*
@@ -94,4 +100,5 @@ class Solution51 {
         return true;
     }
 }
+
 
