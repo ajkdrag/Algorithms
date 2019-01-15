@@ -53,27 +53,26 @@ public class Problem92 {
     static void getFamily(int n){
         while(true){
             int digit_sum = 0;
-            int identity = 0;
             while(n > 0){
                 int d = n%10;
                 n/=10;
-                identity += (1 << ((d<<1)+ d));
                 digit_sum += d*d;
             }
-            if(digit_sum == 1 || set_1.contains(identity)){
+            
+            if(digit_sum == 1 || set_1.contains(digit_sum)){
                 while(!family_stack.empty()){
                     set_1.add(family_stack.pop());
                 }
                 break;
             }
-            if(digit_sum == 89 || set_89.contains(identity)){
+            if(digit_sum == 89 || set_89.contains(digit_sum)){
                 while(!family_stack.empty()){
                     set_89.add(family_stack.pop());
                 }
                 ++res;
                 break;
             }
-            family_stack.push(identity);
+            family_stack.push(digit_sum);
             n = digit_sum;
         }
     }
