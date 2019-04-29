@@ -51,8 +51,10 @@ public class Main {
     }
     
     static int trailing(int n, int k){
-        n %= 1000;
         if(k == 0)
+            return 1;
+        n %= 1000;
+        if(k == 1)
             return n;
         int res = 1;
         while(k > 0){
