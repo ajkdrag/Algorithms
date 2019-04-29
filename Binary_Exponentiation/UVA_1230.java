@@ -31,8 +31,12 @@ public class Main {
     
     // non-recursive binary exponentiation function (we can use recursive approach as well)
     static int modExp(int x, int y, int m){
-        x %= m;
+        if(m == 1)
+            return 0;
         if(y == 0)
+            return 1;
+        x %= m;
+        if(y == 1)
             return x;
         int res = 1;
         while(y > 0){
