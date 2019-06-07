@@ -2,6 +2,65 @@
   Problem at : https://www.spoj.com/problems/HS08PAUL/
 */
 
+// accepted solution
+import java.util.HashSet;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String args[]) throws IOException{
+        Solution sol = new Solution();
+        sol.precomp();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+        while(t-- > 0){
+            System.out.println(sol.solve(Integer.parseInt(br.readLine())));
+        }
+    }
+}
+
+class Solution {
+    int[] sieve;
+    int[] cum;
+    int limit = 10000000;
+    
+    int solve(int n){
+        if(n < 3)
+            return n - 1;
+        return cum[(n-1)>>1];
+    }
+    
+    void fillSieve(){
+        sieve = new int[limit >> 1];
+        for(int i = 3; i*i < limit; i+=2){
+            if(sieve[i>>1] == 0){
+                for(int j = i*i; j < limit; j += (i<<1))
+                    sieve[j>>1] = 1;
+            }
+        }
+    }
+    
+    void precomp(){
+        fillSieve();
+        int val = -1;
+        cum = new int[limit >> 1];
+        cum[0] = 1;
+        for(int x = 1; x < 3163; ++x){
+            for(int y = 1; y < 57; ++y){
+                val = x*x + y*y*y*y;
+                if(val < limit && ((val&1) == 1) && (sieve[val>>1] == 0)){
+                    cum[val>>1] = 1;
+                }
+            }
+        }
+                
+        for(int i = 1; i < limit>>1; ++i)
+            cum[i] += cum[i-1];
+    }
+}
+
+// unaccepted yet noteworthy solution
 import java.util.HashSet;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
