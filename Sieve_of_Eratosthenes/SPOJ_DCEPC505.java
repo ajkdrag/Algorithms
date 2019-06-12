@@ -5,7 +5,7 @@
 import java.io.*;
 import java.util.InputMismatchException;
 
-public class MyClass {
+public class Main {
     public static void main(String args[]) throws IOException{
         Solution sol = new Solution();
         sol.fillSieve();
