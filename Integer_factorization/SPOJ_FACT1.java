@@ -2,9 +2,8 @@
   Problem at : https://www.spoj.com/problems/FACT1/
 */
 
-// unaccepted (TLE)
 import java.math.BigInteger;
-import java.security.SecureRandom;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.io.BufferedReader;
 import java.io.BufferedOutputStream;
@@ -15,11 +14,11 @@ import java.io.PrintWriter;
 import java.io.OutputStream;
 import java.util.Arrays;
     
-public class PollardOptimised {
+ class Main {
     private final static BigInteger ZERO = new BigInteger("0");
     private final static BigInteger ONE  = new BigInteger("1");
     private final static BigInteger TWO  = new BigInteger("2");
-    private final static SecureRandom random = new SecureRandom();
+    private final static Random random = new Random();
     static BigInteger[] factors = new BigInteger[64];
 	static int prlen = 0;
 
@@ -40,9 +39,9 @@ public class PollardOptimised {
     }
 
     public static BigInteger divisor(BigInteger N) {
-        BigInteger c = new BigInteger(N.bitLength(), random);
+        BigInteger c = TWO.add(new BigInteger(1, random));
  
-        BigInteger x = new BigInteger(N.bitLength(), random);
+        BigInteger x = ONE.add(new BigInteger(1, random));
         BigInteger y = x;
         BigInteger divisor = ONE;
  
@@ -100,7 +99,6 @@ public class PollardOptimised {
     }
 }
 
-// fast I/O
 class Kattio extends PrintWriter {
     public Kattio(InputStream i) {
 	super(new BufferedOutputStream(System.out));
@@ -131,8 +129,6 @@ class Kattio extends PrintWriter {
 	return nextToken();
     }
 
-
-
     private BufferedReader r;
     private String line;
     private StringTokenizer st;
@@ -157,4 +153,5 @@ class Kattio extends PrintWriter {
 	return ans;
     }
 }
+
 
