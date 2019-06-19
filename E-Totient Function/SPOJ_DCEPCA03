@@ -1,0 +1,49 @@
+/*
+  Problem at : https://www.spoj.com/problems/DCEPCA03/
+  Great Blog on Totient Summation : https://mathproblems123.wordpress.com/2018/05/10/sum-of-the-euler-totient-function/
+*/
+
+import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+
+public class Main {
+    public static void main(String args[]) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Solution sol = new Solution();
+        int t = Integer.parseInt(br.readLine());
+        while(t-- > 0){
+            System.out.println(sol.solve(Integer.parseInt(br.readLine())));
+        }
+    }
+}
+
+class Solution {
+     HashMap<Integer, Integer> map = new HashMap();
+    int totSum(int n){
+        if(n < 3)
+            return n;
+        if(n == 3)
+            return 4;
+        if(map.containsKey(n))
+            return map.get(n);
+        int total = (n*n + n)>>1;
+        total -= ((n+1)>>1);
+        for(int i = 2; i*i <= n; ++i){
+            if(i == (n/i))
+                total -= totSum(i);
+            else
+                total -= (totSum(n/i) + (n/i - n/(i+1))*totSum(i));
+        }
+        map.put(n, total);
+        return total;
+    }
+    
+    long solve(int n){
+        long res = totSum(n);
+        return res*res;
+    }
+}
+
+
