@@ -1,5 +1,5 @@
 /*
-  Problem at : 
+  Problem at : https://devskill.com/CodingProblems/ViewProblem/60
 */
 
 import java.util.*;
@@ -82,9 +82,7 @@ class Solution {
     
 }
 
-
 class InputReader {
-
 	private InputStream stream;
 	private byte[] buf = new byte[1024];
 	private int curChar;
