@@ -1,2 +1,3 @@
 # Misc.-Solutions
-My solutions to a few coding challenges
+My solutions to a few coding challenges.
+
